@@ -1,0 +1,4 @@
+class Coingecko::Coin 
+  
+  
+end   
