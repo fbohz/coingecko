@@ -1,4 +1,5 @@
 class Coingecko::CLI
+  @@commands = ["ls", "list", "b", "back", "menu", "m", "q", "quit", "exit", "exit!", "find", "f"]
   
   def run 
     welcome
@@ -13,10 +14,10 @@ class Coingecko::CLI
   
   def selection 
     puts "What would you like to do? For the main menu please type menu."
-    @input = gets.strip.downcase 
+    input = gets.strip.downcase 
     #@input
     
-    self.check_selection
+    self.check_selection(input)
   end 
   
   def input
@@ -36,13 +37,13 @@ class Coingecko::CLI
   end 
   
   def list_top_coins
-    puts "What number of coins would you like to see top 1-20, 20-40, 40-60, 60-80 or 80-100?"
-    puts "\nNote: The default base currency is USD. If you like to change it type change"
+    #puts "What number of coins would you like to see top 1-20, 20-40, 40-60, 60-80 or 80-100?"
+    puts "\nNote: The default base currency is USD. Would you like to change the base currency?"
     query = gets.strip.downcase 
-      if query == "change" || query == "c"
+      if query == "yes" || query == "y"
           change_base
       else     
-          list = Coingecko::API.list_top_100
+          list = Coingecko::Coin.new_from_top_100
           puts "listing coins...tbd..need printer to pass list object"
           self.selection
      end 
@@ -55,16 +56,16 @@ class Coingecko::CLI
        #call base_list or maybe printer?
        puts "\nPlease type the coin you would like to use as a base. To go back type back."
        answer = gets.strip.downcase 
-       if answer == "b" || answer == "back"
-          list_top_coins
+       if @@commands.include? answer
+          check_selection(answer)
       else     
-          list = Coingecko::API.list_top_100(answer)
-          puts "listing coins...tbd..need printer to pass list object"
+          list = Coingecko::Coin.new_from_top_100(answer)
+          print_top(list)
           self.selection
      end 
   end   
   
-  def check_selection 
+  def check_selection(input) 
       case input
       when "ls", "list"
         list_top_coins
@@ -85,8 +86,8 @@ class Coingecko::CLI
     puts "Which coin would to find? To go back, please type back."
     @query = gets.strip.downcase 
    
-    if query == "back" || query == "b"
-      self.selection
+    if @@commands.include? query
+      check_selection(query)
     else     
     find_query = Coingecko::API.find_coin(query)
     find_query
@@ -94,7 +95,7 @@ class Coingecko::CLI
   end 
   
   
-  def printer 
+  def print_top(list)
     puts "printing whatever you need..needs refactor."
   end   
   

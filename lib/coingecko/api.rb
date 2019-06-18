@@ -1,13 +1,19 @@
 class Coingecko::API
- # attr_accessor :endpoint
+ #attr_accessor :json
+  
+  # def json 
+  #   @json
+  # end 
   
   def self.api_call(endpoint="coins")
     #defaults to list coins if no argument passed
     #@endpoint = endpoint
     res = open("https://api.coingecko.com/api/v3/#{endpoint}").read 
     @json = JSON.parse(res)
-    
+    @json
   end
+  
+
   
   def self.list_top_100(currency="usd")
     #@currency = currency
