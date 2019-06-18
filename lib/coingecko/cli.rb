@@ -28,33 +28,46 @@ class Coingecko::CLI
   end  
   
   def main_menu
-    puts "\n-To list the top 50 coins type ls."
+    puts "\n-To list the top 100 coins type ls."
     puts "-To find a coin by name, type find."
     puts "-To QUIT: please type q."
 
     self.selection
   end 
   
-  def list
+  def list_top_coins
+    puts "What number of coins would you like to see top 1-20, 20-40, 40-60, 60-80 or 80-100?"
+    puts "\nNote: The default base currency is USD. If you like to change it type change"
+    query = gets.strip.downcase 
+      if query == "change" || query == "c"
+          change_base
+      else     
+          list = Coingecko::API.list_top_100
+          puts "listing coins...tbd..need printer to pass list object"
+          self.selection
+     end 
       
-     puts "listing coins...tbd"
-     #list coins.  
-
-    self.selection
   end
   
-  def list_all
-      
-     puts "listing *ALL* coins...tbd"
-     #list coins.  
-
-    self.selection
-  end
+  def change_base
+       puts "\nHere all the base coins."
+       base_list = Coingecko::API.supported_base
+       #call base_list or maybe printer?
+       puts "\nPlease type the coin you would like to use as a base. To go back type back."
+       answer = gets.strip.downcase 
+       if answer == "b" || answer == "back"
+          list_top_coins
+      else     
+          list = Coingecko::API.list_top_100(answer)
+          puts "listing coins...tbd..need printer to pass list object"
+          self.selection
+     end 
+  end   
   
   def check_selection 
       case input
       when "ls", "list"
-        self.list
+        list_top_coins
       when "menu", "m", "back", "b"
         self.main_menu
       when "q", "quit", "exit", "exit!"
@@ -79,7 +92,12 @@ class Coingecko::CLI
     find_query
    end 
   end 
-    
+  
+  
+  def printer 
+    puts "printing whatever you need..needs refactor."
+  end   
+  
   def quit
     puts "Goodbye! See you next time"
     sleep 1
