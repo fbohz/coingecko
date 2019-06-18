@@ -14,7 +14,7 @@ class Coingecko::API
   #   @json
   # end 
   
-  def self.find_coin(query)
+  def self.find_coin(query) #needs refactor, get top 50 list first
     #binding.pry
     self.api_call("coins/list")
     coin = []
