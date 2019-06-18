@@ -14,12 +14,14 @@ class Coingecko::API
   #   @json
   # end 
   
-  def self.find_coin(query) #needs refactor, get top 50 list first
+  def self.find_coin(query) #needs finish so it lets user select then sends it to main page BUT get top 50 list first
     #binding.pry
     self.api_call("coins/list")
     coin = []
     @json.each_with_index do |v,k| 
-      coin << v if v.fetch("name").include?(query) #needs to refactor this one
+      if v.fetch("name").downcase.include?(query) || v.fetch("name").downcase == query
+        coin << v
+      end 
     end 
     
     #coin.empty? ? "Your search returned no results, please try again." : coin 
