@@ -2,15 +2,15 @@ class Coingecko::API
  # attr_accessor :endpoint
   
   def self.api_call(endpoint="coins")
-    #defaults to list coins
-    @endpoint = endpoint
+    #defaults to list coins if no argument passed
+    #@endpoint = endpoint
     res = open("https://api.coingecko.com/api/v3/#{endpoint}").read 
     @json = JSON.parse(res)
     
   end
   
   def self.list_top_100(currency="usd")
-    @currency = currency
+    #@currency = currency
     self.api_call("coins/markets?vs_currency=#{currency}")
     
   end   
@@ -32,7 +32,15 @@ class Coingecko::API
     
     #coin.empty? ? "Your search returned no results, please try again." : coin 
     puts coin
+  end
+  
+  def self.look_up_coin(coin_name)
+   #@coin_name = coin_name
+    self.api_call("coins/#{coin_name}?tickers=true&market_data=true&community_data=true&developer_data=true&sparkline=true")
   end 
   
+  # def self.current_price_and_change(currency="usd")
+  #   self.api_call("coins/markets?vs_currency=#{currency}")
+  # end 
   
 end 
