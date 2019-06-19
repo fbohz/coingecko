@@ -38,7 +38,7 @@ class Coingecko::Coin
   	 end 
    end
    
-   def self.get_coin(coin_id, base_currency="usd")
+   def self.get_coin(coin_id)
      Coingecko::Coin.new.tap do |coin| 
       Coingecko::API.look_up_coin(coin_id).each do |k,v|
            coin.send("#{k}=", v)

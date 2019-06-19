@@ -33,7 +33,6 @@ class Coingecko::API
       end 
     end 
     
-    #coin.empty? ? "Your search returned no results, please try again." : coin 
     puts coin
   end
   

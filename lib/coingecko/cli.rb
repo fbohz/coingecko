@@ -110,11 +110,11 @@ class Coingecko::CLI
     end   
   end
   
-  def print_coin(id)
+  def print_coin(id, currency="usd")
     coin = Coingecko::Coin.get_coin(id)
     puts "\n\n----------- #{coin.name}(#{coin.symbol}) - Real-Time Rank##{coin.market_cap_rank} ------------"
     sleep 2
-    puts "Current Price: #{coin.market_data["current_price"]["usd"]}"
+    puts "Current Price: #{coin.market_data["current_price"][currency]}"
     sleep 1
     puts "---------------Description--------------\n\n"
     puts coin.description["en"]
