@@ -41,7 +41,6 @@ class Coingecko::API
   end
   
   def self.look_up_coin(coin_id)
-   #@coin_name = coin_name
     self.api_call("coins/#{coin_id}?tickers=true&market_data=true&community_data=true&developer_data=true&sparkline=true")
   end 
   
