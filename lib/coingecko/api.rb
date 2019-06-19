@@ -40,9 +40,9 @@ class Coingecko::API
     puts coin
   end
   
-  def self.look_up_coin(coin_name)
+  def self.look_up_coin(coin_id)
    #@coin_name = coin_name
-    self.api_call("coins/#{coin_name}?tickers=true&market_data=true&community_data=true&developer_data=true&sparkline=true")
+    self.api_call("coins/#{coin_id}?tickers=true&market_data=true&community_data=true&developer_data=true&sparkline=true")
   end 
   
   # def self.current_price_and_change(currency="usd")

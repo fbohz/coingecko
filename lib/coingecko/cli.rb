@@ -38,32 +38,27 @@ class Coingecko::CLI
   
   def list_top_coins
     #puts "What number of coins would you like to see top 1-20, 20-40, 40-60, 60-80 or 80-100?"
-    puts "\nNote: The default base currency is USD. Would you like to change the base currency?"
-    query = gets.strip.downcase 
-      if query == "yes" || query == "y"
-          change_base
-      else     
-          list = Coingecko::Coin.new_from_top_100
-          puts "listing coins...tbd..need printer to pass list object"
-          self.selection
-     end 
-      
+      list = Coingecko::Coin.new_from_top_100
+      print_top(list)
   end
   
-  def change_base
-       puts "\nHere all the base coins."
-       base_list = Coingecko::API.supported_base
-       #call base_list or maybe printer?
-       puts "\nPlease type the coin you would like to use as a base. To go back type back."
-       answer = gets.strip.downcase 
-       if @@commands.include? answer
-          check_selection(answer)
-      else     
-          list = Coingecko::Coin.new_from_top_100(answer)
-          print_top(list)
-          self.selection
-     end 
-  end   
+  # def change_base
+  #     puts "\nNote: The default base currency is USD. Would you like to change the base currency?"
+  #     query = gets.strip.downcase 
+  #       if query == "yes" || query == "y"
+  #         need finish...
+       
+  #     puts "\nHere all the base coins."
+  #     base_list = Coingecko::API.supported_base
+  #     #call base_list or maybe printer?
+  #     puts "\nPlease type the coin you would like to use as a base. To go back type back."
+  #     answer = gets.strip.downcase 
+  #     if @@commands.include? answer
+  #         check_selection(answer)
+  #     else     
+  #       list_top_coins
+  #   end 
+  # end   
   
   def check_selection(input) 
       case input
@@ -96,8 +91,29 @@ class Coingecko::CLI
   
   
   def print_top(list)
-    puts "printing whatever you need..needs refactor."
-  end   
+    puts "Here are the Top 100 Coins! \n\n"
+      sleep 0.5
+    #binding.pry
+    Coingecko::Coin.top_coins.each do |coin|
+    	puts "#{coin.market_cap_rank}. #{coin.name}"
+    end 
+      sleep 0.5
+    puts "\n\nWhich coin would you like to check out? Please type a number 1-100."
+    answer = gets.strip.to_i 
+    
+    if answer.is_a? Numeric
+      id = Coingecko::Coin.top_coins[answer + 1].id
+      print_coin(id)
+    else
+      puts "not a number..needs refactor..will quit.."
+      quit #remove_me
+    end   
+  end
+  
+  def print_coin(id)
+    puts "OK..I'm in print_coin method..printing coin"
+    quit #remove_me
+  end 
   
   def quit
     puts "Goodbye! See you next time"
