@@ -94,8 +94,8 @@ class Coingecko::CLI
     puts "Here are the Top 100 Coins! \n\n"
       sleep 0.5
     #binding.pry
-    Coingecko::Coin.top_coins.each do |coin|
-    	puts "#{coin.market_cap_rank}. #{coin.name}"
+    Coingecko::Coin.top_coins.each_with_index do |coin, index|
+    	puts "#{index + 1}. #{coin.name}"
     end 
       sleep 0.5
     puts "\n\nWhich coin would you like to check out? Please type a number 1-100."
@@ -111,8 +111,13 @@ class Coingecko::CLI
   end
   
   def print_coin(id)
-    puts "OK..I'm in print_coin method..printing coin"
-    Coingecko::Coin.get_coin(id)
+    coin = Coingecko::Coin.get_coin(id)
+    puts "\n\n----------- #{coin.name}(#{coin.symbol}) - Real-Time Rank##{coin.market_cap_rank} ------------"
+    sleep 2
+    puts "Current Price: #{coin.market_data["current_price"]["usd"]}"
+    sleep 1
+    puts "---------------Description--------------\n\n"
+    puts coin.description["en"]
     quit #remove_me
   end 
   
@@ -122,5 +127,10 @@ class Coingecko::CLI
     # system('clear') 
   end   
     
+ #COMMENTS_BEGIN
+    #current_price and price change calls class method look up to populate those. 
+    # the following NEED base_currency:
+    # current_price, ath, ath_change_percentage, price_change_24h_in_currency, price_change_percentage_7d_in_currency, price_change_percentage_30d_in_currency, price_change_percentage_1y_in_currency
+
   
 end   

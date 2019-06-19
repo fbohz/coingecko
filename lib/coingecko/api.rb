@@ -7,7 +7,6 @@ class Coingecko::API
   
   def self.api_call(endpoint="coins")
     #defaults to list coins if no argument passed
-    #@endpoint = endpoint
     res = open("https://api.coingecko.com/api/v3/#{endpoint}").read 
     @json = JSON.parse(res)
     @json
@@ -16,9 +15,7 @@ class Coingecko::API
 
   
   def self.list_top_100(currency="usd")
-    #@currency = currency
     self.api_call("coins/markets?vs_currency=#{currency}")
-    
   end   
   
   def self.supported_base
@@ -26,7 +23,7 @@ class Coingecko::API
   end   
  
   
-  def self.find_coin(query) #needs finish so it lets user select then sends it to main page BUT get top 50 list first
+  def self.find_coin(query) #needs finish 
     #binding.pry
     self.api_call("coins/list")
     coin = []
