@@ -102,7 +102,7 @@ class Coingecko::CLI
     answer = gets.strip.to_i 
     
     if answer.is_a? Numeric
-      id = Coingecko::Coin.top_coins[answer + 1].id
+      id = Coingecko::Coin.top_coins[answer - 1].id
       print_coin(id)
     else
       puts "not a number..needs refactor..will quit.."
@@ -112,6 +112,7 @@ class Coingecko::CLI
   
   def print_coin(id)
     puts "OK..I'm in print_coin method..printing coin"
+    Coingecko::Coin.get_coin(id)
     quit #remove_me
   end 
   

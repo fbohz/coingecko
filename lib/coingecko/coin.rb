@@ -40,7 +40,10 @@ class Coingecko::Coin
  end
  
  def self.get_coin(coin_id)
-   
+   json = Coingecko::API.look_up_coin(coin_id)
+   binding.pry
+   json.each do |k,v| #complete
+  end 
  end  
   
   #COMMENTS_BEGIN
