@@ -1,8 +1,8 @@
-# Coingeck::CLI
+# Coingecko - A CLI Powered by CoinGecko API.
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/coingecko/cli`. To experiment with that code, run `bin/console` for an interactive prompt. 
+Pushes all coin data from Coingecko API. Also lists top 100 coins.
 
-TODO: Delete this and the text above, and describe your gem
+Disclaimer: This is my first gem so any feedback is greatly welcomed!
 
 ## Installation
 
@@ -22,7 +22,11 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+A CLI console is provided to lookup coins or list top 100 coins. It also provides a print feature of basic coin features. However, all coin features can be read as it pulls directly from Coingecko API. To launch the console just launch it from bin folder:
+
+```ruby
+ruby bin/coingecko
+```
 
 ## Development
 
@@ -40,4 +44,4 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 ## Code of Conduct
 
-Everyone interacting in the Coingecko::Cli project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/'courageoustuple'/coingecko/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in the Coingecko project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/'courageoustuple'/coingecko/blob/master/CODE_OF_CONDUCT.md).
