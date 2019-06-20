@@ -139,14 +139,14 @@ class Coingecko::CLI
     rows_two << ["Percentage Change: \n(7 Days) =>  (30 Days) => (1 Year)"]
     rows_two << [ "#{coin.market_data["price_change_percentage_7d_in_currency"][currency].round(1)}%   =>  #{coin.market_data["price_change_percentage_30d_in_currency"][currency].round(1)}%  =>  #{coin.market_data["price_change_percentage_1y_in_currency"][currency].round(1)}%  "] 
     rows_two << [ "\n\nAll-Time High | ATH Date | Since ATH "]
-    rows_two << [" #{coin.market_data["ath"][currency]}  | #{coin.market_data["ath_date"][currency][0..9]}  | #{coin.market_data["ath_change_percentage"][currency].round(1)}  %"]
+    rows_two << [" #{coin.market_data["ath"][currency]}  | #{coin.market_data["ath_date"][currency][0..9]}  | #{coin.market_data["ath_change_percentage"][currency].round(1)}%"]
     table2 = Terminal::Table.new :rows => rows_two
     puts table2
     puts "\n\n      Website             |           Reddit            |                 Github               | Twitter Handle	"
     puts "#{coin.links["homepage"][0]} | #{coin.links["subreddit_url"]} |  #{coin.links["repos_url"]["github"][0]} | #{coin.links["twitter_screen_name"]} "
     rows_three = []  
-    rows_three << [ "Genesis Date: #{coin.genesis_date}"]
-    rows_three << ["\nLast Updated: #{coin.last_updated}"]
+    rows_three << [ "Genesis Date: #{coin.genesis_date}"] if coin.genesis_date
+    rows_three << ["\nLast Updated: #{coin.last_updated[0..9]}"]
     sleep 0
     table3 = Terminal::Table.new :rows => rows_three
     puts table3
