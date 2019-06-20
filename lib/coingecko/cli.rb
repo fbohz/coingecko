@@ -110,10 +110,15 @@ class Coingecko::CLI
     end   
   end
   
-  def decimal_separator(number) #Helper Method. Separates numbers with decimals.
-      whole, decimal = number.to_s.split(".")
-      whole_with_commas = whole.chars.to_a.reverse.each_slice(3).map(&:join).join(",").reverse
-      [whole_with_commas, decimal].compact.join(".")
+  def decimal_separator(number) #Helper Method. Separates numbers with decimals or returns ∞ when NaN.
+     if number.is_a? Numeric
+        whole, decimal = number.to_s.split(".")
+        whole_with_commas = whole.chars.to_a.reverse.each_slice(3).map(&:join).join(",").reverse
+        [whole_with_commas, decimal].compact.join(".")
+    else 
+      number = "∞"
+      number
+    end 
   end 
   
   def print_coin(id, currency="usd")
@@ -121,13 +126,22 @@ class Coingecko::CLI
     coin = Coingecko::Coin.get_coin(id)
     puts "\n\n----------- #{coin.name}(#{coin.symbol}) - Real-Time Rank##{coin.market_cap_rank} ------------"
     sleep 1
-    puts "\n\nCurrent Price: $#{decimal_separator(coin.market_data["current_price"][currency])} | Market Cap: $#{decimal_separator(coin.market_data["market_cap"][currency])}"
-    puts "\n\nAvailable Supply: #{decimal_separator(coin.market_data["total_supply"]).gsub(".", "")} / #{decimal_separator(coin.market_data["circulating_supply"]).gsub(".", "")}" 
-
-    binding.pry
-    sleep 1
-    puts "---------------Description--------------\n\n"
-    puts coin.description["en"]
+    puts "\n\nCurrent Price: $#{decimal_separator(coin.market_data["current_price"][currency])} | Market Cap: $#{decimal_separator(coin.market_data["market_cap"][currency])} | 24hr Trading Vol: $#{decimal_separator(coin.market_data["total_volume"][currency])} "
+    puts "\n\nAvailable Supply: #{decimal_separator(coin.market_data["total_supply"])} / #{decimal_separator(coin.market_data["circulating_supply"])}" 
+    sleep 0
+    puts "\n\n-------------Description-------------\n\n"
+    puts coin.description["en"].gsub(/<\/?[^>]*>/, "") #.gsub strips HTML tags
+    puts "\n\n-------------Quick Facts------------\n\n"
+    puts "\n\nPercentage Change \n\n (7 Days) =>  (30 Days) => (1 Year)"
+    puts "#{coin.market_data["price_change_percentage_7d_in_currency"][currency].round(1)}% / #{coin.market_data["price_change_percentage_30d_in_currency"][currency].round(1)}% | #{coin.market_data["price_change_percentage_1y_in_currency"][currency].round(1)}% |  " 
+    puts "\n\n    All-Time High 	| All-Time High Date	| Since All-Time High 	 "
+    puts " #{coin.market_data["ath"][currency]}  | #{coin.market_data["ath_date"][currency]}  | #{coin.market_data["ath_change_percentage"][currency].round(1)}  %"
+    puts "\n\n      Website             |           Reddit            |                 Github               | Twitter Handle	"
+    puts "#{coin.links["homepage"][0]} | #{coin.links["subreddit_url"]} |  #{coin.links["repos_url"]["github"][0]} | #{coin.links["twitter_screen_name"]} "
+    puts "\n\nGenesis Date: #{coin.genesis_date}	"
+    puts "\n\nLast Updated: #{coin.last_updated}	"
+    sleep 0
+    #binding.pry
     quit #remove_me
   end 
   
