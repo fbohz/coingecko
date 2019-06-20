@@ -110,11 +110,21 @@ class Coingecko::CLI
     end   
   end
   
+  def decimal_separator(number) #Helper Method. Separates numbers with decimals.
+      whole, decimal = number.to_s.split(".")
+      whole_with_commas = whole.chars.to_a.reverse.each_slice(3).map(&:join).join(",").reverse
+      [whole_with_commas, decimal].compact.join(".")
+  end 
+  
   def print_coin(id, currency="usd")
+    rows = []
     coin = Coingecko::Coin.get_coin(id)
     puts "\n\n----------- #{coin.name}(#{coin.symbol}) - Real-Time Rank##{coin.market_cap_rank} ------------"
-    sleep 2
-    puts "Current Price: #{coin.market_data["current_price"][currency]}"
+    sleep 1
+    puts "\n\nCurrent Price: $#{decimal_separator(coin.market_data["current_price"][currency])} | Market Cap: $#{decimal_separator(coin.market_data["market_cap"][currency])}"
+    puts "\n\nAvailable Supply: #{decimal_separator(coin.market_data["total_supply"]).gsub(".", "")} / #{decimal_separator(coin.market_data["circulating_supply"]).gsub(".", "")}" 
+
+    binding.pry
     sleep 1
     puts "---------------Description--------------\n\n"
     puts coin.description["en"]
