@@ -122,25 +122,35 @@ class Coingecko::CLI
   end 
   
   def print_coin(id, currency="usd")
-    rows = []
     coin = Coingecko::Coin.get_coin(id)
-    puts "\n\n----------- #{coin.name}(#{coin.symbol}) - Real-Time Rank##{coin.market_cap_rank} ------------"
-    sleep 1
-    puts "\n\nCurrent Price: $#{decimal_separator(coin.market_data["current_price"][currency])} | Market Cap: $#{decimal_separator(coin.market_data["market_cap"][currency])} | 24hr Trading Vol: $#{decimal_separator(coin.market_data["total_volume"][currency])} "
-    puts "\n\nAvailable Supply: #{decimal_separator(coin.market_data["total_supply"])} / #{decimal_separator(coin.market_data["circulating_supply"])}" 
+    rows = []
+    rows << [ "\n\n----------- #{coin.name}(#{coin.symbol}) - Real-Time Rank##{coin.market_cap_rank} ------------"]
     sleep 0
-    puts "\n\n-------------Description-------------\n\n"
-    puts coin.description["en"].gsub(/<\/?[^>]*>/, "") #.gsub strips HTML tags
+    rows << [ "\n\nCurrent Price: $#{decimal_separator(coin.market_data["current_price"][currency])} | Market Cap: $#{decimal_separator(coin.market_data["market_cap"][currency])}"]
+    rows << [ "24hr Trading Vol: $#{decimal_separator(coin.market_data["total_volume"][currency])}"]
+    rows << [ "\n\nAvailable Supply: #{decimal_separator(coin.market_data["total_supply"])} / #{decimal_separator(coin.market_data["circulating_supply"])}\n\n" ]
+    table1 = Terminal::Table.new :rows => rows
+    puts table1
+    sleep 0
+    puts  "\n\nDescription:\n\n"
+    puts  coin.description["en"].gsub(/<\/?[^>]*>/, "") #.gsub strips HTML tags
     puts "\n\n-------------Quick Facts------------\n\n"
-    puts "\n\nPercentage Change \n\n (7 Days) =>  (30 Days) => (1 Year)"
-    puts "#{coin.market_data["price_change_percentage_7d_in_currency"][currency].round(1)}% / #{coin.market_data["price_change_percentage_30d_in_currency"][currency].round(1)}% | #{coin.market_data["price_change_percentage_1y_in_currency"][currency].round(1)}% |  " 
-    puts "\n\n    All-Time High 	| All-Time High Date	| Since All-Time High 	 "
-    puts " #{coin.market_data["ath"][currency]}  | #{coin.market_data["ath_date"][currency]}  | #{coin.market_data["ath_change_percentage"][currency].round(1)}  %"
+    rows_two = []
+    rows_two << ["Percentage Change: \n(7 Days) =>  (30 Days) => (1 Year)"]
+    rows_two << [ "#{coin.market_data["price_change_percentage_7d_in_currency"][currency].round(1)}%   =>  #{coin.market_data["price_change_percentage_30d_in_currency"][currency].round(1)}%  =>  #{coin.market_data["price_change_percentage_1y_in_currency"][currency].round(1)}%  "] 
+    rows_two << [ "\n\nAll-Time High | ATH Date | Since ATH "]
+    rows_two << [" #{coin.market_data["ath"][currency]}  | #{coin.market_data["ath_date"][currency][0..9]}  | #{coin.market_data["ath_change_percentage"][currency].round(1)}  %"]
+    table2 = Terminal::Table.new :rows => rows_two
+    puts table2
     puts "\n\n      Website             |           Reddit            |                 Github               | Twitter Handle	"
     puts "#{coin.links["homepage"][0]} | #{coin.links["subreddit_url"]} |  #{coin.links["repos_url"]["github"][0]} | #{coin.links["twitter_screen_name"]} "
-    puts "\n\nGenesis Date: #{coin.genesis_date}	"
-    puts "\n\nLast Updated: #{coin.last_updated}	"
+    rows_three = []  
+    rows_three << [ "Genesis Date: #{coin.genesis_date}"]
+    rows_three << ["\nLast Updated: #{coin.last_updated}"]
     sleep 0
+    table3 = Terminal::Table.new :rows => rows_three
+    puts table3
+
     #binding.pry
     quit #remove_me
   end 
