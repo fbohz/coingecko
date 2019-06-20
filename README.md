@@ -2,7 +2,7 @@
 
 Pushes all coin data from Coingecko API. Also lists top 100 coins.
 
-Disclaimer: This is my first gem so any feedback is greatly welcomed!
+Disclaimer: This is my first Ruby gem so any feedback is greatly welcomed!
 
 ## Installation
 
@@ -22,7 +22,7 @@ Or install it yourself as:
 
 ## Usage
 
-A CLI console is provided to lookup coins or list top 100 coins. It also provides a print feature of basic coin features. However, all coin features can be read as it pulls directly from Coingecko API. To launch the console just launch it from bin folder:
+A CLI console is provided to lookup coins or list top 100 coins. It also provides a print feature of basic coin attributes. However, all coin attributes can be read as it pulls directly from Coingecko API. To launch the console just launch it from bin folder E.g.
 
 ```ruby
 ruby bin/coingecko
