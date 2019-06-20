@@ -1,4 +1,4 @@
-# Coingecko - A CLI Powered by CoinGecko API.
+# Coingecko - A CoinGecko API with CLI Interface
 
 Pushes all coin data from Coingecko API. Also lists top 100 coins.
 
