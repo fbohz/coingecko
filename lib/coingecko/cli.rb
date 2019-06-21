@@ -19,23 +19,17 @@ class Coingecko::CLI
   
   def another_selection?
     puts "Would you like make another selection?"
-    res = gets.strip.downcase
-    if res == "y" || res == "yes"
+    input = gets.strip.downcase
+    if input == "y" || input == "yes"
       main_menu
-    elsif res == "n" || res == "no" 
+    elsif input == "n" || input == "no" 
       quit
+      return
     else 
-     check_selection(res)
+     check_selection(input)
     end  
   end 
-  
-  def input
-    @input
-  end 
-  
-  def query
-    @query
-  end  
+ 
   
   def main_menu
     puts "\n-To list the top 100 coins type ls."
@@ -79,13 +73,13 @@ class Coingecko::CLI
     end 
       sleep 0.5
     puts "\n\nWhich coin would you like to check out? Please type a number 1-100."
-    answer = gets.strip.to_i 
+    answer = gets.chomp.to_i 
     
-    if answer.is_a? Numeric
+    if answer > 0 #if string converted to_i will have value of 0
       id = Coingecko::Coin.top_coins[answer - 1].id
       print_coin(id)
     else
-      check_selection(input) 
+      check_selection(answer) 
     end   
   end
   
@@ -131,20 +125,27 @@ class Coingecko::CLI
   
   def find 
     puts "Which coin would you like to find? To go back, please type back."
-    query = gets.strip.downcase 
+    input = gets.strip.downcase 
+    
     Coingecko::Global.get_all_coins_list
     all_coins_basic = Coingecko::Global.all_coins_list
-    
-    all_coins_basic.each_with_index do |coin, i|
-      binding.pry
-      if coin.name.strip.downcase == query
-        puts "Coin match found. Returning coin info"
+    returned_id = ""
+    all_coins_basic.each do |coin|
+      if coin.name.strip.downcase == input
+        returned_id = coin.id
+      end
+     end 
+   
+   if !returned_id.empty?
+      puts "Coin match found. Returning coin info"
         sleep 2
-        print_coin(coin.id)
-      else 
-        check_selection(query) 
-      end 
-    end 
+      puts "..."
+        sleep 1
+      print_coin(returned_id)
+   else 
+     check_selection(input) 
+   end 
+    
   end   
 
   def print_coin(id, currency="usd")

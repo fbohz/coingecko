@@ -17,14 +17,17 @@ class Coingecko::Global
   
   def self.get_all_coins_list
      @@all_coins_list.clear
-     Coingecko::Global.new.tap do |coin_info| 
-      Coingecko::API.get_all_coins.each do |hash_coin|
-        hash_coin.each do |k,v|
-           coin_info.send("#{k}=", v)
-        end 
+     api_get_all = Coingecko::API.get_all_coins
+     counter = 0
+     while counter < api_get_all.length 
+       Coingecko::Global.new.tap do |coin_info| 
+         api_get_all[counter].each do |k, v|
+             coin_info.send("#{k}=", v)
+         end 
         @@all_coins_list << coin_info
-      end 
-    end
-  end 
-  
+        counter += 1
+       end
+    end 
+ end 
+ 
 end 
