@@ -110,16 +110,21 @@ class Coingecko::CLI
   def print_global_info(currency="usd")
     global_info = Coingecko::Global.new_from_global
     rows = []
+    puts "Returning Real-Time Global Info from Coingecko"
+      sleep 1
+    puts "..."
       rows << ["Total Cryptocurrencies: #{global_info.data["active_cryptocurrencies"]}"]
       rows << ["Total Market Cap: #{decimal_separator(global_info.data["total_market_cap"][currency])}"]
       rows << ["Total Volume: #{decimal_separator(global_info.data["total_volume"][currency])}"]
     table_printer(rows)
+      sleep 2
     rows_two = []
       rows_two << ["Market Cap Share (Top 10)"]  
       global_info.data["market_cap_percentage"].each do |k, v|
 		    rows_two << ["#{k.upcase}: #{round_if_num(v)}%"] 
       end 
     table_printer(rows_two)
+      sleep 2
     another_selection?
   end  
   
@@ -152,29 +157,32 @@ class Coingecko::CLI
     coin = Coingecko::Coin.get_coin(id)
     rows = []
       rows << [ "----------- #{coin.name}(#{coin.symbol}) - Rank##{coin.market_cap_rank} (Real-Time) ------------"]
-      sleep 0
+        sleep 2
       rows << [ "\nCurrent Price: $#{decimal_separator(coin.market_data["current_price"][currency])} | Market Cap: $#{decimal_separator(coin.market_data["market_cap"][currency])}"]
       rows << [ "24hr Trading Vol: $#{decimal_separator(coin.market_data["total_volume"][currency])}"]
       rows << [ "Available Supply: #{decimal_separator(coin.market_data["total_supply"])} / #{decimal_separator(coin.market_data["circulating_supply"])}\n\n" ]
     table_printer(rows)
-    sleep 0
+        sleep 2
       puts  "\nDESCRIPTION:\n"
+        sleep 0.5
       puts  coin.description["en"].gsub(/<\/?[^>]*>/, "") #.gsub strips HTML tags
-        puts "\n----------------QUICK FACTS---------------\n"
+        sleep 2  
+      puts "\n----------------QUICK FACTS---------------\n"
+        sleep 0.5  
       rows_two = []
-        rows_two << ["Percentage Change: \n(7 Days) =>(30 Days) =>(1 Year)"]
-        rows_two << [ "(#{round_if_num(coin.market_data["price_change_percentage_7d_in_currency"][currency])}%        #{round_if_num(coin.market_data["price_change_percentage_30d_in_currency"][currency])}%      #{round_if_num(coin.market_data["price_change_percentage_1y_in_currency"][currency])}%  "] 
-        rows_two << [ "\n\nAll-Time High |  ATH Date  | Since ATH "]
-        rows_two << ["#{coin.market_data["ath"][currency]}          #{coin.market_data["ath_date"][currency][0..9]}      #{round_if_num(coin.market_data["ath_change_percentage"][currency])}%"]
-      table_printer(rows_two)
-      rows_three = [] 
-        rows_three << ["Website: #{coin.links["homepage"][0]}"]
-        rows_three << ["Reddit: #{coin.links["subreddit_url"]}"]
-        rows_three << ["Github: #{coin.links["repos_url"]["github"][0]} "]
-        rows_three << ["Twitter Handle: @#{coin.links["twitter_screen_name"]}"]
-        rows_three << ["Genesis Date: #{coin.genesis_date}"] if coin.genesis_date
-        rows_three << ["Last Updated: #{coin.last_updated[0..9]}"]
-      sleep 0
+      rows_two << ["Percentage Change: \n(7 Days) =>(30 Days) =>(1 Year)"]
+      rows_two << [ "(#{round_if_num(coin.market_data["price_change_percentage_7d_in_currency"][currency])}%        #{round_if_num(coin.market_data["price_change_percentage_30d_in_currency"][currency])}%      #{round_if_num(coin.market_data["price_change_percentage_1y_in_currency"][currency])}%  "] 
+      rows_two << [ "\n\nAll-Time High |  ATH Date  | Since ATH "]
+      rows_two << ["#{coin.market_data["ath"][currency]}          #{coin.market_data["ath_date"][currency][0..9]}      #{round_if_num(coin.market_data["ath_change_percentage"][currency])}%"]
+    table_printer(rows_two)
+    rows_three = [] 
+      rows_three << ["Website: #{coin.links["homepage"][0]}"]
+      rows_three << ["Reddit: #{coin.links["subreddit_url"]}"]
+      rows_three << ["Github: #{coin.links["repos_url"]["github"][0]} "]
+      rows_three << ["Twitter Handle: @#{coin.links["twitter_screen_name"]}"]
+      rows_three << ["Genesis Date: #{coin.genesis_date}"] if coin.genesis_date
+      rows_three << ["Last Updated: #{coin.last_updated[0..9]}"]
+          sleep 2
     table_printer(rows)
     another_selection?
   end 
@@ -183,7 +191,7 @@ class Coingecko::CLI
     puts "Goodbye! See you next time."
     sleep 1
     return
-    #system('clear') 
+    system('clear') 
   end   
 
   #FOR FUTURE Feature
