@@ -136,13 +136,13 @@ class Coingecko::CLI
       sleep 0
       rows << [ "\n\nCurrent Price: $#{decimal_separator(coin.market_data["current_price"][currency])} | Market Cap: $#{decimal_separator(coin.market_data["market_cap"][currency])}"]
       rows << [ "24hr Trading Vol: $#{decimal_separator(coin.market_data["total_volume"][currency])}"]
-      rows << [ "\n\nAvailable Supply: #{decimal_separator(coin.market_data["total_supply"])} / #{decimal_separator(coin.market_data["circulating_supply"])}\n\n" ]
+      rows << [ "Available Supply: #{decimal_separator(coin.market_data["total_supply"])} / #{decimal_separator(coin.market_data["circulating_supply"])}\n\n" ]
     table1 = Terminal::Table.new :rows => rows
     puts table1
     sleep 0
-      puts  "\n\nDESCRIPTION:\n"
+      puts  "\nDESCRIPTION:\n"
       puts  coin.description["en"].gsub(/<\/?[^>]*>/, "") #.gsub strips HTML tags
-        puts "\n------------QUICK FACTS------------\n\n"
+        puts "\n------------QUICK FACTS------------\n"
       rows_two = []
         rows_two << ["Percentage Change: \n(7 Days) =>(30 Days) =>(1 Year)"]
         rows_two << [ "(#{round_if_num(coin.market_data["price_change_percentage_7d_in_currency"][currency])}%        #{round_if_num(coin.market_data["price_change_percentage_30d_in_currency"][currency])}%      #{round_if_num(coin.market_data["price_change_percentage_1y_in_currency"][currency])}%  "] 
