@@ -40,6 +40,10 @@ class Coingecko::API
     self.api_call("coins/#{coin_id}?tickers=true&market_data=true&community_data=true&developer_data=true&sparkline=true")
   end 
   
+  def self.get_global_info
+    self.api_call("global")
+  end 
+  
   # def self.current_price_and_change(currency="usd")
   #   self.api_call("coins/markets?vs_currency=#{currency}")
   # end 

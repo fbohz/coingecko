@@ -31,6 +31,7 @@ class Coingecko::CLI
   def main_menu
     puts "\n-To list the top 100 coins type ls."
     puts "-To find a coin by name, type find."
+    puts "-To get general info, type gen."
     puts "-To QUIT: please type q."
 
     self.selection
@@ -68,6 +69,8 @@ class Coingecko::CLI
         self.main_menu
       when "q", "quit", "exit", "exit!"
         self.quit  
+      when "global", "g", "gen", "general" 
+        print_global_info
       when "find", "f"  
         find
       # NEED logic ike when input.include? blblabla check if it exists  
@@ -127,29 +130,47 @@ class Coingecko::CLI
     else 
         "Coingecko Returned No Data"
     end 
-  end   
+  end
+  
+  def table_printer(rows)
+    table = Terminal::Table.new :rows => rows
+    puts table
+  end 
+  
+  def print_global_info(currency="usd")
+    global_info = Coingecko::Global.new_from_global
+    rows = []
+      rows << ["Total Cryptocurrencies: #{global_info.data["active_cryptocurrencies"]}"]
+      rows << ["Total Market Cap: #{decimal_separator(global_info.data["total_market_cap"][currency])}"]
+      rows << ["Total Volume: #{decimal_separator(global_info.data["total_volume"][currency])}"]
+    table_printer(rows)
+    rows_two = []
+      rows_two << ["Market Cap Share (Top 10)"]  
+      global_info.data["market_cap_percentage"].each do |k, v|
+		    rows_two << ["#{k.upcase}: #{round_if_num(v)}%"] 
+      end 
+    table_printer(rows_two)
+  end  
   
   def print_coin(id, currency="usd")
     coin = Coingecko::Coin.get_coin(id)
     rows = []
-      rows << [ "\n\n----------- #{coin.name}(#{coin.symbol}) - Rank##{coin.market_cap_rank} (Real-Time) ------------"]
+      rows << [ "----------- #{coin.name}(#{coin.symbol}) - Rank##{coin.market_cap_rank} (Real-Time) ------------"]
       sleep 0
-      rows << [ "\n\nCurrent Price: $#{decimal_separator(coin.market_data["current_price"][currency])} | Market Cap: $#{decimal_separator(coin.market_data["market_cap"][currency])}"]
+      rows << [ "\nCurrent Price: $#{decimal_separator(coin.market_data["current_price"][currency])} | Market Cap: $#{decimal_separator(coin.market_data["market_cap"][currency])}"]
       rows << [ "24hr Trading Vol: $#{decimal_separator(coin.market_data["total_volume"][currency])}"]
       rows << [ "Available Supply: #{decimal_separator(coin.market_data["total_supply"])} / #{decimal_separator(coin.market_data["circulating_supply"])}\n\n" ]
-    table1 = Terminal::Table.new :rows => rows
-    puts table1
+    table_printer(rows)
     sleep 0
       puts  "\nDESCRIPTION:\n"
       puts  coin.description["en"].gsub(/<\/?[^>]*>/, "") #.gsub strips HTML tags
-        puts "\n------------QUICK FACTS------------\n"
+        puts "\n----------------QUICK FACTS---------------\n"
       rows_two = []
         rows_two << ["Percentage Change: \n(7 Days) =>(30 Days) =>(1 Year)"]
         rows_two << [ "(#{round_if_num(coin.market_data["price_change_percentage_7d_in_currency"][currency])}%        #{round_if_num(coin.market_data["price_change_percentage_30d_in_currency"][currency])}%      #{round_if_num(coin.market_data["price_change_percentage_1y_in_currency"][currency])}%  "] 
         rows_two << [ "\n\nAll-Time High |  ATH Date  | Since ATH "]
         rows_two << ["#{coin.market_data["ath"][currency]}          #{coin.market_data["ath_date"][currency][0..9]}      #{round_if_num(coin.market_data["ath_change_percentage"][currency])}%"]
-      table2 = Terminal::Table.new :rows => rows_two
-      puts table2
+      table_printer(rows_two)
       rows_three = [] 
         rows_three << ["Website: #{coin.links["homepage"][0]}"]
         rows_three << ["Reddit: #{coin.links["subreddit_url"]}"]
@@ -158,8 +179,7 @@ class Coingecko::CLI
         rows_three << ["Genesis Date: #{coin.genesis_date}"] if coin.genesis_date
         rows_three << ["Last Updated: #{coin.last_updated[0..9]}"]
       sleep 0
-    table3 = Terminal::Table.new :rows => rows_three
-    puts table3
+    table_printer(rows)
 
     quit #remove_me
   end 
