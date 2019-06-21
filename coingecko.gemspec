@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["''"]
 
   spec.summary       = "tbd"
-  spec.description   = "tbd"
+  spec.description   = "Pushes all coin data from Coingecko API. Also lists top 100 coins. This is my first Ruby gem so any feedback is greatly welcomed!"
   spec.homepage      = "https://github.com/fbohz/coingecko.git"
   spec.license       = "MIT"
 
