@@ -190,7 +190,6 @@ class Coingecko::CLI
   def quit
     puts "Goodbye! See you next time."
     sleep 1
-    return
     system('clear') 
   end   
 
