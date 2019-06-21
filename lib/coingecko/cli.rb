@@ -8,11 +8,11 @@ class Coingecko::CLI
   end 
   
   def welcome 
-    puts "\nWelcome to Coingecko! Powered by CoinGecko API.\n\n"
+    puts "\nWelcome to Coingecko! Powered by CoinGecko API.\n"
   end 
   
   def selection 
-    puts "What would you like to do? For the main menu please type menu."
+    puts "\nWhat would you like to do? For the main menu please type menu."
     input = gets.strip.downcase 
     self.check_selection(input) #from now on self will be implicit as method receiver.
   end 
@@ -36,6 +36,7 @@ class Coingecko::CLI
     puts "-To find a coin by name, type find."
     puts "-To get general info, type gen."
     puts "-To QUIT: please type q."
+    sleep 1
     selection
   end 
   
@@ -66,7 +67,11 @@ class Coingecko::CLI
   end  
 
   def print_top(list)
-    puts "Here are the Top 100 Coins! \n\n"
+    puts "Here are the Top 100 Coins!"
+      sleep 1.0
+    puts ".."  
+      sleep 1.0
+    puts "....\n\n"  
       sleep 0.5
     Coingecko::Coin.top_coins.each_with_index do |coin, index|
     	puts "#{index + 1}. #{coin.name}"
@@ -110,16 +115,18 @@ class Coingecko::CLI
   def print_global_info(currency="usd")
     global_info = Coingecko::Global.new_from_global
     rows = []
-    puts "Returning Real-Time Global Info from Coingecko"
-      sleep 1
-    puts "..."
+    puts "Returning Real-Time Global Info from Coingecko..."
+      sleep 2
+    puts "\nGlobal Info:\n"
+      sleep 0.5
       rows << ["Total Cryptocurrencies: #{global_info.data["active_cryptocurrencies"]}"]
       rows << ["Total Market Cap: #{decimal_separator(global_info.data["total_market_cap"][currency])}"]
       rows << ["Total Volume: #{decimal_separator(global_info.data["total_volume"][currency])}"]
     table_printer(rows)
       sleep 2
     rows_two = []
-      rows_two << ["Market Cap Share (Top 10)"]  
+    puts "Market Cap Share (Top 10):\n"
+      sleep 1.5
       global_info.data["market_cap_percentage"].each do |k, v|
 		    rows_two << ["#{k.upcase}: #{round_if_num(v)}%"] 
       end 
@@ -142,10 +149,9 @@ class Coingecko::CLI
      end 
    
    if !returned_id.empty?
-      puts "Coin match found. Returning coin info"
-        sleep 2
-      puts "..."
         sleep 1
+      puts "\nCoin match found!\n\n"
+        sleep 2
       print_coin(returned_id)
    else 
      check_selection(input) 
@@ -154,6 +160,12 @@ class Coingecko::CLI
   end   
 
   def print_coin(id, currency="usd")
+    puts "Retrieving your coin."
+      sleep 0.5
+    puts ".."  
+      sleep 0.5
+    puts "....\n\n"  
+      sleep 0.5
     coin = Coingecko::Coin.get_coin(id)
     rows = []
       rows << [ "----------- #{coin.name}(#{coin.symbol}) - Rank##{coin.market_cap_rank} (Real-Time) ------------"]
@@ -164,11 +176,11 @@ class Coingecko::CLI
     table_printer(rows)
         sleep 2
       puts  "\nDESCRIPTION:\n"
-        sleep 0.5
+        sleep 2
       puts  coin.description["en"].gsub(/<\/?[^>]*>/, "") #.gsub strips HTML tags
         sleep 2  
       puts "\n----------------QUICK FACTS---------------\n"
-        sleep 0.5  
+        sleep 1  
       rows_two = []
       rows_two << ["Percentage Change: \n(7 Days) =>(30 Days) =>(1 Year)"]
       rows_two << [ "(#{round_if_num(coin.market_data["price_change_percentage_7d_in_currency"][currency])}%        #{round_if_num(coin.market_data["price_change_percentage_30d_in_currency"][currency])}%      #{round_if_num(coin.market_data["price_change_percentage_1y_in_currency"][currency])}%  "] 
@@ -182,13 +194,15 @@ class Coingecko::CLI
       rows_three << ["Twitter Handle: @#{coin.links["twitter_screen_name"]}"]
       rows_three << ["Genesis Date: #{coin.genesis_date}"] if coin.genesis_date
       rows_three << ["Last Updated: #{coin.last_updated[0..9]}"]
-          sleep 2
-    table_printer(rows)
+        sleep 2
+    table_printer(rows_three)
+        sleep 2
     another_selection?
   end 
   
   def quit
-    puts "Goodbye! See you next time."
+    sleep 0.5
+    puts "\nGoodbye! See you next time."
     sleep 1
     system('clear') 
   end   
