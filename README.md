@@ -1,6 +1,6 @@
 # Coingecko - A CoinGecko API with CLI Interface
 
-Pushes all coin data from Coingecko API. Also lists top 100 coins and over market info.
+Pushes all coin data from Coingecko API. Also lists top 100 coins and overall market info.
 
 Disclaimer: This is my first published Ruby gem so any feedback is greatly welcomed!
 
