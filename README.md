@@ -1,4 +1,4 @@
-# Coingecko - A CoinGecko API with CLI 
+# Coingecko - A CoinGecko API with CLI
 
 Pushes all coin data from Coingecko API. Also lists top 100 coins and overall market info.
 
@@ -31,10 +31,10 @@ Coingecko::Global.new_from_global
 #Returns object with ALL available coins with id, symbol, name
 Coingecko::Global.get_all_coins_list
 
-#Returns top 100 coins objects only with id, symbol, name, market_cap_rank, last_updated. Default currency is "usd" if no currency given.
+#Returns top 100 coins objects only with id, symbol, name, market_cap_rank, last_updated. Default currency is "usd" if no currency given. E.g.
 Coingecko::Coin.new_from_top_100
 
-#Returns a particular coin object with ALL avaiable data from Coingecko. It needs an id as an argument. Example:
+#Returns a particular coin object with ALL avaiable data from Coingecko. It needs an id as an argument. E.g.
 Coingecko::Coin.get_coin("bitcoin")
 
 
