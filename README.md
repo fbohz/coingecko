@@ -20,7 +20,7 @@ Or install it yourself as:
 
     $ gem install coingecko
 
-## Usage
+## Development Usage
 
 A CLI console is provided to lookup coins or list top 100 coins. It also provides a print feature of basic coin attributes. However, all coin attributes can be read as it pulls directly from Coingecko API. To launch the console just launch it from bin folder E.g.
 
@@ -28,7 +28,7 @@ A CLI console is provided to lookup coins or list top 100 coins. It also provide
 ruby bin/coingecko
 ```
 
-## Development
+## Development Testing
 
 After checking out the repo, run `bin/setup` to install dependencies. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
 
@@ -36,7 +36,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/'courageoustuple'/coingecko. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/fbohz/coingecko. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 ## License
 
