@@ -34,8 +34,7 @@ Coingecko::Global.get_all_coins_list
 #Returns top 100 coins objects only with id, symbol, name, market_cap_rank, last_updated. Default currency is "usd"
 Coingecko::Coin.new_from_top_100
 
-#Returns a particular coin object with ALL avaiable data from Coingecko. It needs an id as an argument
-Example:
+#Returns a particular coin object with ALL avaiable data from Coingecko. It needs an id as an argument. Example:
 Coingecko::Coin.get_coin("bitcoin")
 
 
