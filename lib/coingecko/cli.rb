@@ -1,3 +1,5 @@
+
+include Concerns::Findable
 class Coingecko::CLI
   @@commands = ["ls", "list", "b", "back", "menu", "m", "q", "quit", "exit", "exit!", "find", "f"]
 
@@ -137,29 +139,34 @@ class Coingecko::CLI
 
   def find
     puts "Which coin would you like to find?"
-    input = gets.strip.downcase
+    input = gets.chomp.downcase
+    coin = find_by_name(input) || guess_by_name(input)
+    case
+    when coin.class == Coingecko::Global  #found with pry to see what class it is
+            sleep 1
+        puts "\nCoin match found!\n\n"
+            sleep 2
+        print_coin(coin.id)
+    when coin.class == Array && coin.length > 0
+            sleep 1
+        puts "\nMore than one possible match found. Please see below..\n\n"
+            sleep 2
+          coin.each_with_index { |o, i| puts "#{i + 1} - #{o.name}" }
+        puts "\nIf one of the coins provided is a match, please type 1 - #{coin.length}. Else type menu to go back.\n\n"
+        answer = gets.chomp
+           if answer.to_i > 0 #if string converted to_i will have value of 0
+            id = coin[answer.to_i - 1].id
+            print_coin(id)
+          else
+            check_selection(answer)
+          end
+    else
+            sleep 1
+        puts "\nSorry. There was no coin match for '#{input}'.\n\n"
+            sleep 2
+        another_selection?
 
-    Coingecko::Global.get_all_coins_list
-    all_coins_basic = Coingecko::Global.all_coins_list
-    returned_id = ""
-    all_coins_basic.each do |coin|
-      if coin.name.strip.downcase == input
-        returned_id = coin.id
-      end
-     end
-
-   if !returned_id.empty?
-        sleep 1
-      puts "\nCoin match found!\n\n"
-        sleep 2
-      print_coin(returned_id)
-   else
-        sleep 1
-     puts "\nSorry. There was no coin match for '#{input}'.\n\n"
-        sleep 2
-     another_selection?
-   end
-
+    end
   end
 
   def print_coin(id, currency="usd")
