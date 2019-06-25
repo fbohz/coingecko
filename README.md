@@ -20,7 +20,28 @@ Or install it yourself as:
 
     $ gem install coingecko
 
-## Development Usage
+
+## Usage
+
+```ruby
+
+#Returns object with all Global Data from coingecko
+Coingecko::Global.new_from_global
+
+#Returns object with ALL available coins with id, symbol, name
+Coingecko::Global.get_all_coins_list
+
+#Returns top 100 coins objects only with id, symbol, name, market_cap_rank, last_updated. Default currency is "usd"
+Coingecko::Coin.new_from_top_100
+
+#Returns a particular coin object with ALL avaiable data from Coingecko. It needs an id as an argument
+Example:
+Coingecko::Coin.get_coin("bitcoin")
+
+
+```
+
+## Development
 
 A CLI console is provided to lookup coins or list top 100 coins. It also provides a print feature of basic coin attributes. However, all coin attributes can be read as it pulls directly from Coingecko API. To launch the console just launch it from bin folder E.g.
 
