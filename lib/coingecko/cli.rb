@@ -152,7 +152,7 @@ class Coingecko::CLI
         puts "\nMore than one possible match found. Please see below..\n\n"
             sleep 2
           coin.each_with_index { |o, i| puts "#{i + 1} - #{o.name}" }
-        puts "\nIf one of the coins provided is a match, please type 1 - #{coin.length}. Else type menu to go back.\n\n"
+        puts "\nIf one of the coins provided is what you're looking for, please type 1 - #{coin.length}. Else type menu to go back.\n\n"
         answer = gets.chomp
            if answer.to_i > 0 #if string converted to_i will have value of 0
             id = coin[answer.to_i - 1].id
