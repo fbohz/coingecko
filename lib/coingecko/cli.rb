@@ -136,7 +136,7 @@ class Coingecko::CLI
   end
 
   def find
-    puts "Which coin would you like to find? To go back, please type back."
+    puts "Which coin would you like to find?"
     input = gets.strip.downcase
 
     Coingecko::Global.get_all_coins_list
