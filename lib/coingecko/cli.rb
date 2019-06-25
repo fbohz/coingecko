@@ -154,7 +154,10 @@ class Coingecko::CLI
         sleep 2
       print_coin(returned_id)
    else
-     check_selection(input)
+        sleep 1
+     puts "\nSorry. There was no coin match for '#{input}'.\n\n"
+        sleep 2
+     another_selection?
    end
 
   end
