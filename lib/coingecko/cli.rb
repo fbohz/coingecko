@@ -143,16 +143,19 @@ class Coingecko::CLI
     coin = find_by_name(input) || guess_by_name(input)
     case
     when coin.class == Coingecko::Global  #found with pry to see what class it is
-            sleep 1
-        puts "\nCoin match found!\n\n"
+            sleep 1.5
+        puts "\nGreat. '#{input}' coin match found!\n\n"
             sleep 2
         print_coin(coin.id)
     when coin.class == Array && coin.length > 0
-            sleep 1
-        puts "\nMore than one possible match found. Please see below..\n\n"
+            sleep 1.5
+        puts "\nNo exact match for '#{input}'. Did you mean?\n\n"
             sleep 2
           coin.each_with_index { |o, i| puts "#{i + 1} - #{o.name}" }
-        puts "\nIf one of the coins provided is what you're looking for, please type 1 - #{coin.length}. Else type menu to go back.\n\n"
+            sleep 1
+        print "\nIf one of the coins provided is what you're looking for, please type 1"
+        print " - #{coin.length}" if coin.length > 1
+        puts " or else type menu to go back.\n\n"
         answer = gets.chomp
            if answer.to_i > 0 #if string converted to_i will have value of 0
             id = coin[answer.to_i - 1].id
@@ -162,7 +165,7 @@ class Coingecko::CLI
           end
     else
             sleep 1
-        puts "\nSorry. There was no coin match for '#{input}'.\n\n"
+        puts "\nSorry. We didn't find '#{input}'.\n\n"
             sleep 2
         another_selection?
 
