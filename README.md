@@ -39,16 +39,20 @@ Coingecko::Coin.get_coin("bitcoin")
 
 
 ```
+## CLI Example
 
-## Development
+A CLI console is provided to see an example of the methods in action. You need to have the ** terminal-table gem ** installed for correct display of output. You can do one of the following to launch the CLI:
 
-A CLI console is provided to lookup coins or list top 100 coins. It also provides a print feature of basic coin attributes. However, all coin attributes can be read as it pulls directly from Coingecko API. To launch the console just launch it from bin folder E.g.
+```ruby
+Coingecko::CLI.new.run
+```
+or to launch directly:
 
 ```ruby
 ruby bin/coingecko
 ```
 
-## Development Testing
+## Development 
 
 After checking out the repo, run `bin/setup` to install dependencies. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
 
