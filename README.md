@@ -39,7 +39,7 @@ Coingecko::Coin.get_coin("bitcoin")
 
 
 ```
-## CLI Example
+## CLI Usage
 
 A CLI console is provided to see an example of the methods in action. You need to have the ** terminal-table gem ** installed for correct display of output. You can do one of the following to launch the CLI:
 
